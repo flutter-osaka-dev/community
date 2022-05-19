@@ -1,0 +1,18 @@
+{
+    "home": "Home",
+    "hello": "Hello",
+    "welcome": "Welcome",
+    "pleaseJoinUs": "Please join us without hesitation",
+    "events": "Events",
+    "organization": "Organization",
+    "organization_detail": "Flutter Japan User Group (Osaka)",
+    "activities": "Activities",
+    "activities_detail": "Workshops and LT meetings are scheduled.",
+    "sessions": "Sessions",
+    "session_description1": "You can watch videos in sessions.",
+    "session_description2": "Please subscribe to our YouTube channel.",
+    "documents": "Documents",
+    "joinSlack": "Join Slack",
+    "codeOfConduct": "Code of Conduct",
+    "copyright": "Flutter Japan User Group"
+}
