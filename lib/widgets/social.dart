@@ -18,7 +18,11 @@ class Social extends StatelessWidget {
     final socialLinks = <Map<String, String>>[
       {
         'name': 'github_logo',
-        'url': 'https://github.com/FlutterJP-Osaka',
+        'url': 'https://github.com/flutter-osaka-dev',
+      },
+      {
+        'name': 'youtube_logo',
+        'url': 'https://www.youtube.com/@flutter-osaka',
       },
       {
         'name': 'connpass_logo',
