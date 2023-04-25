@@ -96,7 +96,7 @@ class IndexPage extends StatelessWidget {
               urlString = 'https://flutter-jp.connpass.com/';
               break;
             case MenuItem.documents:
-              urlString = 'https://flutter-osaka.netlify.app/';
+              urlString = 'https://flutter-osaka-dev.github.io/osaka/';
               break;
           }
           await launch(
@@ -144,7 +144,7 @@ class IndexPage extends StatelessWidget {
           child: TextButton(
             onPressed: () async {
               await launch(
-                'https://flutter-osaka.netlify.app/',
+                'https://flutter-osaka-dev.github.io/osaka',
                 webOnlyWindowName: '_blank',
               );
             },
