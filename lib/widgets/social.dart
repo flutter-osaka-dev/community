@@ -21,6 +21,10 @@ class Social extends StatelessWidget {
         'url': 'https://github.com/flutter-osaka-dev',
       },
       {
+        'name': 'youtube_logo',
+        'url': 'https://www.youtube.com/@flutter-osaka',
+      },
+      {
         'name': 'connpass_logo',
         'url': 'https://flutter-jp.connpass.com/',
       },
