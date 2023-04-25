@@ -1,19 +1,15 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:community/entity/channel.dart';
-import 'package:community/entity/video.dart';
 import 'package:community/gen/assets.gen.dart';
 import 'package:community/responsive_layout_builder.dart';
 import 'package:community/widgets/custom_typography.dart';
 import 'package:community/widgets/explain_items.dart';
+import 'package:community/widgets/features.dart';
 import 'package:community/widgets/footer.dart';
 import 'package:community/widgets/social.dart';
+import 'package:community/widgets/youtube_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 enum MenuItem { events, documents }
@@ -216,69 +212,6 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
 
-    const channelId = 'UChmWPiBWf1oMfR14iYsihhw';
-    const key = 'AIzaSyBnfyuNhmX6qg3xsEntDxcL8WnEinoqBE0';
-    const _baseUrl = 'www.googleapis.com';
-    var _nextPageToken = '';
-
-    Future<List<Video>?> fetchVideosFromPlaylist(
-        {required dynamic playlistId}) async {
-      final parameters = <String, String>{
-        'part': 'snippet',
-        'playlistId': playlistId,
-        'maxResults': '30',
-        'pageToken': _nextPageToken,
-        'key': key,
-      };
-      final response = await http.get(Uri.https(
-        _baseUrl,
-        '/youtube/v3/playlistItems',
-        parameters,
-      ));
-      if (response.statusCode == 200) {
-        final dynamic data = json.decode(response.body);
-
-        _nextPageToken = data['nextPageToken'] ?? '';
-        final dynamic videosJson = data['items'];
-
-        final videos = <Video>[];
-        videosJson.forEach(
-          (dynamic json) => videos.add(
-            Video.fromMap(json['snippet']),
-          ),
-        );
-        return videos;
-      } else {
-        // throw json.decode(response.body)['error']['message'];
-        return null;
-      }
-    }
-
-    Future<Channel?> fetchChannel({required String channelId}) async {
-      final parameters = <String, String>{
-        'part': 'snippet, contentDetails, statistics',
-        'id': channelId,
-        'key': key,
-      };
-      final response = await http.get(Uri.https(
-        _baseUrl,
-        '/youtube/v3/channels',
-        parameters,
-      ));
-      if (response.statusCode == 200) {
-        final dynamic data = json.decode(response.body)['items'][0];
-        final channel = Channel.fromMap(data);
-
-        channel.videos = await fetchVideosFromPlaylist(
-          playlistId: channel.uploadPlaylistId,
-        );
-        return channel;
-      } else {
-        // throw json.decode(response.body)['error']['message'];
-        return null;
-      }
-    }
-
     return ResponsiveLayoutBuilder(builder: (context, layout, width) {
       final sizeFactor = (layout == ResponsiveLayout.slim) ? 0.6 : 1.0;
 
@@ -302,52 +235,7 @@ class Body extends StatelessWidget {
                       CustomTypography.heading(appLocalizations.sessions,
                           type: 'heading', textAlign: TextAlign.center),
                       const Gap(16),
-                      CustomTypography(appLocalizations.session_description1,
-                          type: 'body', textAlign: TextAlign.center),
-                      CustomTypography(appLocalizations.session_description2,
-                          type: 'body', textAlign: TextAlign.center),
-                      const Gap(16),
-                      FutureBuilder<dynamic>(
-                        future: fetchChannel(channelId: channelId),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(children: <Widget>[
-                              const SizedBox(width: 12),
-                              Column(
-                                children: <Widget>[
-                                  ...snapshot.data!.videos.map((dynamic video) {
-                                    return Card(
-                                      child: ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundColor: Colors.white,
-                                          radius: 35,
-                                          backgroundImage: NetworkImage(snapshot
-                                              .data!
-                                              .profilePictureUrl as String),
-                                        ),
-                                        onTap: () async {
-                                          await launch(
-                                            video.url as String,
-                                            webOnlyWindowName: '_blank',
-                                          );
-                                        },
-                                        title: Text(video.title as String),
-                                        subtitle:
-                                            Text(video.channelTitle as String),
-                                        trailing: Icon(Icons.more_vert),
-                                      ),
-                                    );
-                                  })
-                                ],
-                              ),
-                            ]);
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
-                      const Gap(32),
+                      if (SHOW_YOUTUBE) YouTubeInfo(),
                       const Social(),
                     ],
                   ),
