@@ -12,7 +12,7 @@ class Footer extends StatelessWidget {
     final footerLinks = <Map<String, String>>[
       {
         'name': appLocalizations.codeOfConduct,
-        'url': 'https://flutterjp-osaka.github.io/Code-of-Conduct/',
+        'url': 'https://flutter-osaka-dev.github.io/Code-of-Conduct/',
       },
     ];
 
