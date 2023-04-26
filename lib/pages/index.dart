@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum MenuItem { events, documents }
@@ -125,30 +126,31 @@ class IndexPage extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         child: Tooltip(
           message: appLocalizations.events,
-          child: TextButton(
-            onPressed: () async {
-              await launch(
-                'https://flutter-jp.connpass.com/',
-                webOnlyWindowName: '_blank',
-              );
-            },
-            child: Text(appLocalizations.events),
-          ),
+          child: Link(
+              uri: Uri.parse('https://flutter-jp.connpass.com/'),
+              target: LinkTarget.blank,
+              builder: (BuildContext ctx, FollowLink? openLink) {
+                return TextButton(
+                  onPressed: openLink,
+                  child: Text(appLocalizations.events),
+                );
+              }),
         ),
       ),
       Container(
         margin: const EdgeInsets.all(8),
         child: Tooltip(
           message: appLocalizations.documents,
-          child: TextButton(
-            onPressed: () async {
-              await launch(
-                'https://flutter-osaka-dev.github.io/osaka',
-                webOnlyWindowName: '_blank',
-              );
-            },
-            child: Text(appLocalizations.documents),
-          ),
+          child: Link(
+              uri: Uri.parse(
+                  'https://flutter-osaka-dev.github.io/osaka/handson'),
+              target: LinkTarget.blank,
+              builder: (BuildContext ctx, FollowLink? openLink) {
+                return TextButton(
+                  onPressed: openLink,
+                  child: Text(appLocalizations.documents),
+                );
+              }),
         ),
       ),
       Container(
@@ -176,22 +178,22 @@ class IndexPage extends StatelessWidget {
         child: Material(
             color: Colors.transparent,
             child: Center(
-              child: InkWell(
-                child: Text(
-                  appLocalizations.joinSlack,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat-Bold',
-                  ),
-                ),
-                onTap: () async {
-                  const url =
-                      'https://join.slack.com/t/flutter-osaka/shared_invite/enQtODg3NTMxNTg4Njg5LTBhY2ZiMWFhOTI3NjZmN2IwZTc1MWY1Yzc3ODQ4NGRhYzQyNWM0NTg2NzY3OWEwNjk2MmMxMzQ4ZjFmNTZhNTI';
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  }
-                },
-              ),
+              child: Link(
+                  uri: Uri.parse(
+                      'https://join.slack.com/t/flutter-osaka/shared_invite/enQtODg3NTMxNTg4Njg5LTBhY2ZiMWFhOTI3NjZmN2IwZTc1MWY1Yzc3ODQ4NGRhYzQyNWM0NTg2NzY3OWEwNjk2MmMxMzQ4ZjFmNTZhNTI'),
+                  target: LinkTarget.blank,
+                  builder: (BuildContext ctx, FollowLink? openLink) {
+                    return InkWell(
+                      onTap: openLink,
+                      child: Text(
+                        appLocalizations.joinSlack,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Montserrat-Bold',
+                        ),
+                      ),
+                    );
+                  }),
             )),
       )
     ];
