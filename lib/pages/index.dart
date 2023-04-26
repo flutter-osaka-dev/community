@@ -1,6 +1,5 @@
 import 'package:community/gen/assets.gen.dart';
 import 'package:community/responsive_layout_builder.dart';
-import 'package:community/widgets/custom_typography.dart';
 import 'package:community/widgets/explain_items.dart';
 import 'package:community/widgets/features.dart';
 import 'package:community/widgets/footer.dart';
@@ -231,9 +230,6 @@ class Body extends StatelessWidget {
                       ),
                       const Gap(16),
                       const ExplainItems(),
-                      const Gap(16),
-                      CustomTypography.heading(appLocalizations.sessions,
-                          type: 'heading', textAlign: TextAlign.center),
                       const Gap(16),
                       if (SHOW_YOUTUBE) YouTubeInfo(),
                       const Social(),

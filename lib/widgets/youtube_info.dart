@@ -19,6 +19,9 @@ class YouTubeInfo extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Column(children: <Widget>[
+            CustomTypography.heading(appLocalizations.sessions,
+                type: 'heading', textAlign: TextAlign.center),
+            const Gap(16),
             CustomTypography(appLocalizations.session_description1,
                 type: 'body', textAlign: TextAlign.center),
             CustomTypography(appLocalizations.session_description2,
