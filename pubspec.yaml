@@ -1,34 +1,19 @@
-name: community
-description: A new Flutter project.
-
-publish_to: 'none'
-
-version: 1.0.0+1
+name: community_site
+description: A new Jaspr project
+version: 0.0.1
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ^3.10.0
 
 dependencies:
-  cupertino_icons: ^1.0.3
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-  flutter_svg: ^0.22.0
-  flutter_svg_provider: ^0.1.10
-  gap: ^2.0.0
-  http: ^0.13.4
-  intl: ^0.17.0
+  jaspr: ^0.22.4
+  jaspr_router: ^0.8.1
 
 dev_dependencies:
-  flutter_gen_runner:
-  flutter_test:
-    sdk: flutter
-  pedantic_mono: ^1.14.0+1
-  url_launcher: ^6.0.11
+  build_runner: ^2.10.0
+  build_web_compilers: ^4.4.16
+  jaspr_builder: ^0.22.4
+  lints: ^5.0.0
 
-flutter:
-  uses-material-design: true
-  generate: true
-  assets:
-    - assets/
+jaspr:
+  mode: static
